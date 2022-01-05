@@ -20,9 +20,15 @@ public class AzureShareOutput : IOutput
 
     public async Task ProcessAsync(ProcessorResult processorResult, CancellationToken cancellationToken)
     {
+        var dateAndTime = $"{processorResult.Metadata.CreationDate ?? processorResult.Metadata.ProcessingDate:yyyyMMdd_hhmmss}";
+        var email = processorResult.Metadata.Email.Replace("@", "_at_");
+        var fileName = $"{dateAndTime}_{email}_{processorResult.Metadata.Number}.{processorResult.Metadata.FileExtension}";
+
         var root = _shareClient.GetRootDirectoryClient();
-        var fileClient = await root.CreateFileAsync(processorResult.Metadata.FullName, processorResult.Metadata.Size);
+        var fileClient = await root.CreateFileAsync(fileName, processorResult.Metadata.Size);
         await fileClient.Value.UploadAsync(processorResult.MemoryStream);
+
+        _logger.LogDebug("Uploaded file {FileName}", fileName);
     }
 }
 
