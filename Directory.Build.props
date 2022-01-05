@@ -1,0 +1,7 @@
+<Project>
+	<PropertyGroup>
+		<Copyright>Copyright © Christoph Haag 2022</Copyright>
+		<LangVersion Condition="'$(MSBuildProjectExtension)' == '.csproj'">10.0</LangVersion>
+		<Nullable>enable</Nullable>
+	</PropertyGroup>
+</Project>
