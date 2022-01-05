@@ -456,3 +456,4 @@ $RECYCLE.BIN/
 
 # Custom
 appsettings.Development.json
+local.settings.json
